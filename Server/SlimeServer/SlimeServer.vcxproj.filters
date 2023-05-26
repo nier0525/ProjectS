@@ -31,6 +31,9 @@
     <Filter Include="02. Thread\LockContainer">
       <UniqueIdentifier>{b6e6b423-640d-40fb-89fe-c114592fab29}</UniqueIdentifier>
     </Filter>
+    <Filter Include="06. JobQueue">
+      <UniqueIdentifier>{d7d79277-705b-4ba3-aba1-264a0ddb074f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -75,6 +78,12 @@
     <ClInclude Include="LockQueue.h">
       <Filter>02. Thread\LockContainer</Filter>
     </ClInclude>
+    <ClInclude Include="Job.h">
+      <Filter>06. JobQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="JobQueue.h">
+      <Filter>06. JobQueue</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -112,6 +121,12 @@
     </ClCompile>
     <ClCompile Include="LockQueue.cpp">
       <Filter>02. Thread\LockContainer</Filter>
+    </ClCompile>
+    <ClCompile Include="Job.cpp">
+      <Filter>06. JobQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="JobQueue.cpp">
+      <Filter>06. JobQueue</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

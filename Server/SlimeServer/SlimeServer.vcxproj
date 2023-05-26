@@ -156,6 +156,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Dumper.h" />
+    <ClInclude Include="Job.h" />
+    <ClInclude Include="JobQueue.h" />
     <ClInclude Include="LockQueue.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="MemoryLeakDetector.h" />
@@ -172,6 +174,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dumper.cpp" />
+    <ClCompile Include="Job.cpp" />
+    <ClCompile Include="JobQueue.cpp" />
     <ClCompile Include="LockQueue.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="SlimeAllocator.cpp" />

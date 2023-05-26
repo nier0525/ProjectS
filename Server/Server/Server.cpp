@@ -1,12 +1,42 @@
 #include "pch.h"
 #include <ThreadManager.h>
 #include <Dumper.h>
+#include <JobQueue.h>
 
-class MyClass
+void StartServer()
+{
+	while (true)
+	{
+		LMaxFlushJobTick = GetTickCount64() + 60;
+		GET_SINGLE(GlobalJobQueue)->Flush();
+
+		this_thread::yield();
+	}
+}
+
+void DisplayLog(const wchar* log)
+{
+	wcout << log; 
+}
+
+void StartLogger()
+{
+	while (true)
+	{
+		GET_SINGLE(Logger)->Flush();
+		this_thread::sleep_for(100ms);
+	}
+}
+
+DECLARE_SHARED(MyClass);
+class MyClass : public JobQueue
 {	
 public:
+	void IncrementValue() { ++value; }
 	void SetValue(int32 value) { this->value = value; }
 	int32 GetValue() const { return value; }
+
+	void PrintValue() { LOG(L"%u", value); }
 
 private:
 	int32 value{ 0 };
@@ -17,21 +47,16 @@ private:
 SpinLock latch;
 int value{ 0 };
 
-void DisplayLog(const wchar* log) { wcout << log; }
+MyClassRef c{ MyClass::MakeShared() };
 
 void Func()
 {
-	WRITE_LOCK(latch);
-	for (int i = 0; i < 100000; ++i)
-		++value;
-}
+	LMaxFlushJobTick = GetTickCount64() + 60;
 
-void Func2()
-{
-	READ_LOCK(latch);
-	this_thread::sleep_for(100ms);
+	for (int i = 0; i < 10000; ++i)	
+		c->PushJob(&MyClass::IncrementValue);	
+	c->PushJob(&MyClass::PrintValue);
 }
-
 
 int main()
 {
@@ -39,6 +64,13 @@ int main()
 	Dumper::Launch();
 
 	GET_SINGLE(Logger)->Initialize("logs", DisplayLog, false);
-	LOG(L"Hello %u", 5);
-	LOG(L"C++");
+	GET_SINGLE(ThreadManager)->Launch(StartLogger);
+
+	for (int i = 0; i < 4; ++i)
+		GET_SINGLE(ThreadManager)->Launch(StartServer);
+	this_thread::sleep_for(1s);
+	for (int i = 0; i < 4; ++i)
+		GET_SINGLE(ThreadManager)->Launch(Func);
+
+	GET_SINGLE(ThreadManager)->Joins();
 }
