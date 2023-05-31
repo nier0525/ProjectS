@@ -34,6 +34,9 @@
     <Filter Include="06. JobQueue">
       <UniqueIdentifier>{d7d79277-705b-4ba3-aba1-264a0ddb074f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Socket\Buffer">
+      <UniqueIdentifier>{adf2e8aa-1899-4be0-947f-ed52186bd3aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -84,6 +87,15 @@
     <ClInclude Include="JobQueue.h">
       <Filter>06. JobQueue</Filter>
     </ClInclude>
+    <ClInclude Include="JobTimer.h">
+      <Filter>06. JobQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="ReceiveBuffer.h">
+      <Filter>03. Socket\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="SendBuffer.h">
+      <Filter>03. Socket\Buffer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -127,6 +139,15 @@
     </ClCompile>
     <ClCompile Include="JobQueue.cpp">
       <Filter>06. JobQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="JobTimer.cpp">
+      <Filter>06. JobQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="ReceiveBuffer.cpp">
+      <Filter>03. Socket\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="SendBuffer.cpp">
+      <Filter>03. Socket\Buffer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

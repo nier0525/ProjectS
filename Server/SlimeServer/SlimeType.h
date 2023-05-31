@@ -21,6 +21,8 @@ using uint64 = unsigned __int64;
 using mchar = char;
 using wchar = wchar_t;
 
+#define MAX_PACKET_SIZE 8192
+
 #define CRASH(reason)						\
 {											\
 	int32* crash = nullptr;					\

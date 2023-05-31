@@ -2,6 +2,7 @@
 #include <ThreadManager.h>
 #include <Dumper.h>
 #include <JobQueue.h>
+#include <SendBuffer.h>
 
 void StartServer()
 {
@@ -9,6 +10,7 @@ void StartServer()
 	{
 		LMaxFlushJobTick = GetTickCount64() + 60;
 		GET_SINGLE(GlobalJobQueue)->Flush();
+		GET_SINGLE(JobTimerManager)->Flush();
 
 		this_thread::yield();
 	}
@@ -49,13 +51,13 @@ int value{ 0 };
 
 MyClassRef c{ MyClass::MakeShared() };
 
-void Func()
+void Func(int i)
 {
 	LMaxFlushJobTick = GetTickCount64() + 60;
 
 	for (int i = 0; i < 10000; ++i)	
-		c->PushJob(&MyClass::IncrementValue);	
-	c->PushJob(&MyClass::PrintValue);
+		c->PushJob(&MyClass::IncrementValue);		
+	c->ReserveJob(1000 * i, &MyClass::PrintValue);
 }
 
 int main()
@@ -68,9 +70,6 @@ int main()
 
 	for (int i = 0; i < 4; ++i)
 		GET_SINGLE(ThreadManager)->Launch(StartServer);
-	this_thread::sleep_for(1s);
-	for (int i = 0; i < 4; ++i)
-		GET_SINGLE(ThreadManager)->Launch(Func);
 
 	GET_SINGLE(ThreadManager)->Joins();
 }

@@ -25,6 +25,11 @@ void JobQueue::PushJob(Action&& job)
 	PushJob(Job::MakeShared(move(job)));
 }
 
+void JobQueue::ReserveJob(uint64 interval, Action&& job)
+{
+	GET_SINGLE(JobTimerManager)->Push(interval, shared_from_this(), Job::MakeShared( move(job)));
+}
+
 void JobQueue::PushJob(JobRef job, bool invoke)
 {
 	auto count = jobCount.fetch_add(1);

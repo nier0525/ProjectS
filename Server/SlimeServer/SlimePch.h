@@ -20,4 +20,6 @@ using namespace std;
 #include "ThreadLock.h"
 #include "MemoryLeakDetector.h"
 #include "SlimeAllocator.h"
+#include "JobQueue.h"
+#include "JobTimer.h"
 #include "Logger.h"
