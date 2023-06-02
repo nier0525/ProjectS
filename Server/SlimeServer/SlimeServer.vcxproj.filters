@@ -10,9 +10,6 @@
     <Filter Include="02. Thread">
       <UniqueIdentifier>{adfd90cc-898d-4f82-8052-48910d8e8f96}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. Socket">
-      <UniqueIdentifier>{21b14885-c9ac-494b-b52f-98d009779c39}</UniqueIdentifier>
-    </Filter>
     <Filter Include="04. Memory">
       <UniqueIdentifier>{235a48d5-8658-470d-b6a8-795d3ea469b5}</UniqueIdentifier>
     </Filter>
@@ -34,8 +31,20 @@
     <Filter Include="06. JobQueue">
       <UniqueIdentifier>{d7d79277-705b-4ba3-aba1-264a0ddb074f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. Socket\Buffer">
+    <Filter Include="03. IOCP">
+      <UniqueIdentifier>{21b14885-c9ac-494b-b52f-98d009779c39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. IOCP\Buffer">
       <UniqueIdentifier>{adf2e8aa-1899-4be0-947f-ed52186bd3aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. IOCP\Packet">
+      <UniqueIdentifier>{8c75f171-60f2-4ed1-9344-6736799df3c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. IOCP\Socket">
+      <UniqueIdentifier>{e01d9bce-59a9-4fa5-9c00-9d46e4feb91e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. IOCP\Server">
+      <UniqueIdentifier>{8d842e31-e949-4fe0-8c4a-69687e2e7e8f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -91,10 +100,28 @@
       <Filter>06. JobQueue</Filter>
     </ClInclude>
     <ClInclude Include="ReceiveBuffer.h">
-      <Filter>03. Socket\Buffer</Filter>
+      <Filter>03. IOCP\Buffer</Filter>
     </ClInclude>
     <ClInclude Include="SendBuffer.h">
-      <Filter>03. Socket\Buffer</Filter>
+      <Filter>03. IOCP\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="SocketAddress.h">
+      <Filter>03. IOCP\Socket</Filter>
+    </ClInclude>
+    <ClInclude Include="SocketUtil.h">
+      <Filter>03. IOCP\Socket</Filter>
+    </ClInclude>
+    <ClInclude Include="IOCPEvent.h">
+      <Filter>03. IOCP\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="IOCPModule.h">
+      <Filter>03. IOCP\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="IOCPSession.h">
+      <Filter>03. IOCP\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="IOCPListener.h">
+      <Filter>03. IOCP\Server</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -144,10 +171,28 @@
       <Filter>06. JobQueue</Filter>
     </ClCompile>
     <ClCompile Include="ReceiveBuffer.cpp">
-      <Filter>03. Socket\Buffer</Filter>
+      <Filter>03. IOCP\Buffer</Filter>
     </ClCompile>
     <ClCompile Include="SendBuffer.cpp">
-      <Filter>03. Socket\Buffer</Filter>
+      <Filter>03. IOCP\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="SocketAddress.cpp">
+      <Filter>03. IOCP\Socket</Filter>
+    </ClCompile>
+    <ClCompile Include="SocketUtil.cpp">
+      <Filter>03. IOCP\Socket</Filter>
+    </ClCompile>
+    <ClCompile Include="IOCPEvent.cpp">
+      <Filter>03. IOCP\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="IOCPModule.cpp">
+      <Filter>03. IOCP\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="IOCPSession.cpp">
+      <Filter>03. IOCP\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="IOCPListener.cpp">
+      <Filter>03. IOCP\Server</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

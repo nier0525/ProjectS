@@ -156,6 +156,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Dumper.h" />
+    <ClInclude Include="IOCPEvent.h" />
+    <ClInclude Include="IOCPListener.h" />
+    <ClInclude Include="IOCPModule.h" />
+    <ClInclude Include="IOCPSession.h" />
     <ClInclude Include="Job.h" />
     <ClInclude Include="JobQueue.h" />
     <ClInclude Include="JobTimer.h" />
@@ -172,11 +176,17 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="SlimePch.h" />
     <ClInclude Include="SlimeType.h" />
+    <ClInclude Include="SocketAddress.h" />
+    <ClInclude Include="SocketUtil.h" />
     <ClInclude Include="ThreadLock.h" />
     <ClInclude Include="ThreadManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dumper.cpp" />
+    <ClCompile Include="IOCPEvent.cpp" />
+    <ClCompile Include="IOCPListener.cpp" />
+    <ClCompile Include="IOCPModule.cpp" />
+    <ClCompile Include="IOCPSession.cpp" />
     <ClCompile Include="Job.cpp" />
     <ClCompile Include="JobQueue.cpp" />
     <ClCompile Include="JobTimer.cpp" />
@@ -196,6 +206,8 @@
     </ClCompile>
     <ClCompile Include="SlimePch.cpp" />
     <ClCompile Include="SlimeType.cpp" />
+    <ClCompile Include="SocketAddress.cpp" />
+    <ClCompile Include="SocketUtil.cpp" />
     <ClCompile Include="ThreadLock.cpp" />
     <ClCompile Include="ThreadManager.cpp" />
   </ItemGroup>
