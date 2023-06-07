@@ -22,6 +22,8 @@ using namespace std;
 #include "SlimeAllocator.h"
 #include "JobQueue.h"
 #include "JobTimer.h"
+#include "JobManager.h"
+#include "Packet.h"
 #include "IOCPSession.h"
 #include "IOCPModule.h"
 #include "Logger.h"

@@ -71,6 +71,29 @@ protected:
 	ReceiveEvent receiveEvent;
 };
 
+class PacketSession : public IOCPSession
+{
+	struct Header
+	{
+	public:
+		int16 size{ 0 };
+		int16 protocol{ 0 };
+	};
+protected:
+	PacketSession();
+	virtual ~PacketSession();
+
+private:
+	virtual int32 OnReceive(uint8* buffer, int32 bytes) sealed;
+
+protected:
+	virtual void OnReceive(PacketRef packet) abstract;
+
+public:
+	void DoSend(Packet& packet);
+	void DoSend(PacketRef packet);
+};
+
 class IOCPSessionManager
 {
 	DECLARE_SINGLE(IOCPSessionManager)

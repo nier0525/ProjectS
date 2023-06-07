@@ -5,7 +5,7 @@ DECLARE_SHARED(IOCPContext);
 class IOCPContext : public enable_shared_from_this<IOCPContext>
 {
 public:
-	virtual void OnDispatch(struct IOCPEvent* iocpEvent, int32 bytes) abstract;
+	virtual void OnDispatch(class IOCPEvent* iocpEvent, int32 bytes) abstract;
 	virtual HANDLE GetHandle() abstract;
 };
 
@@ -38,7 +38,7 @@ public:
 	AcceptEvent() : IOCPEvent(IOCPEventType::ACCEPT) {}
 
 public:
-	IOCPSessionRef session{ nullptr };
+	shared_ptr<class IOCPSession> session{ nullptr };
 };
 
 class ConnectEvent : public IOCPEvent

@@ -1,17 +1,16 @@
 #include "pch.h"
 #include <ThreadManager.h>
 #include <Dumper.h>
-#include <JobQueue.h>
-#include <SendBuffer.h>
+#include <IOCPModule.h>
+#include "User.h"
 
-void StartServer()
+void StartServer(IOCPServerRef server)
 {
 	while (true)
 	{
-		LMaxFlushJobTick = GetTickCount64() + 60;
-		GET_SINGLE(GlobalJobQueue)->Flush();
-		GET_SINGLE(JobTimerManager)->Flush();
-
+		GET_SINGLE(JobManager)->UpdateTick(60);
+		server->OnDispatch(10);
+		GET_SINGLE(JobManager)->Flush();
 		this_thread::yield();
 	}
 }
@@ -33,8 +32,14 @@ int main()
 	GET_SINGLE(Logger)->Initialize("logs", [](const wchar* log) { wcout << log; }, false);
 	GET_SINGLE(ThreadManager)->Launch(StartLogger);
 
+	SocketUtil::Initialize();
+
+	auto server = IOCPServer::MakeShared(SocketAddress(L"127.0.0.1", 8050), User::MakeShared<>);
+	server->Open();
+	server->Listen(10);
+
 	for (int i = 0; i < 4; ++i)
-		GET_SINGLE(ThreadManager)->Launch(StartServer);
+		GET_SINGLE(ThreadManager)->Launch([&server]() { StartServer(server); });
 
 	LOG(L"Open Server");
 	GET_SINGLE(ThreadManager)->Joins();

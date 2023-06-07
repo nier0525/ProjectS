@@ -1,9 +1,10 @@
 #pragma once
 #include "SocketUtil.h"
 #include "IOCPEvent.h"
-#include "IOCPListener.h"
 
 DECLARE_SHARED(IOCPModule);
+DECLARE_SHARED(IOCPServer);
+DECLARE_SHARED(IOCPClient);
 
 class IOCPModule : public enable_shared_from_this<IOCPModule>
 {
@@ -36,6 +37,7 @@ protected:
 	atomic_bool isClosed{ false };
 };
 
+class IOCPListener;
 class IOCPServer : public IOCPModule
 {
 public:
@@ -47,6 +49,7 @@ public:
 	void Listen(int32 listenCount = 1);
 
 private:
+	shared_ptr<IOCPListener> listener{ nullptr };
 
 	USE_ALLOCATE(IOCPServer)
 };

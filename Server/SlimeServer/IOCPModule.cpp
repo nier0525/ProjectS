@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "IOCPModule.h"
+#include "IOCPListener.h"
 
 IOCPModule::IOCPModule(IOCPType type, SocketAddress address, SessionFactory sessionFactory) : type(type), address(address), sessionFactory(sessionFactory)
 {
@@ -81,12 +82,20 @@ IOCPServer::~IOCPServer()
 
 void IOCPServer::Open()
 {
+	if (nullptr != listener)
+		return LOG(L"Already Opend");
 
+	listener = SlimeAllocator::MakeShared<IOCPListener>();
+	if (false == listener->Open(GET_SHARED(IOCPServer)))
+		CRASH("Listener Open Failed..");
 }
 
 void IOCPServer::Listen(int32 listenCount)
 {
+	if (nullptr == listener)
+		return LOG(L"Invalid Listener");
 
+	listener->DoAccept(listenCount);
 }
 
 IOCPClient::IOCPClient(SocketAddress address, SessionFactory sessionFactory) : IOCPModule(IOCPType::CLIENT, address, sessionFactory)

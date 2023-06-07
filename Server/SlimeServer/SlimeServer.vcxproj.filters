@@ -123,6 +123,12 @@
     <ClInclude Include="IOCPListener.h">
       <Filter>03. IOCP\Server</Filter>
     </ClInclude>
+    <ClInclude Include="JobManager.h">
+      <Filter>06. JobQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="Packet.h">
+      <Filter>03. IOCP\Packet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -193,6 +199,12 @@
     </ClCompile>
     <ClCompile Include="IOCPListener.cpp">
       <Filter>03. IOCP\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="JobManager.cpp">
+      <Filter>06. JobQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="Packet.cpp">
+      <Filter>03. IOCP\Packet</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

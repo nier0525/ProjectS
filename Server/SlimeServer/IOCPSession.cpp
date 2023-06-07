@@ -278,6 +278,55 @@ void IOCPSession::ProcessReceive(int32 bytes)
 	RegisterReceive();
 }
 
+PacketSession::PacketSession() : IOCPSession()
+{
+
+}
+
+PacketSession::~PacketSession()
+{
+
+}
+
+int32 PacketSession::OnReceive(uint8* buffer, int32 bytes)
+{
+	auto processLength{ 0 };
+	while (true)
+	{
+		auto dataSize = bytes - processLength;
+		if (dataSize < sizeof(Header))
+			break;
+
+		auto header = *reinterpret_cast<Header*>(&buffer[processLength]);
+		if (dataSize < header.size)
+			break;
+
+		processLength += header.size;
+
+		auto packet = Packet::MakeShared();
+		packet->Parse(buffer, header.size);
+
+		OnReceive(packet);
+	}
+	return processLength;
+}
+
+void PacketSession::DoSend(Packet& packet)
+{
+	auto sendBuffer = GET_SINGLE(SendBufferManager)->Acquire(packet.GetAllSize());
+	auto buffer = sendBuffer->GetBuffer();
+
+	packet.Serialize(buffer);
+	sendBuffer->Close(packet.GetAllSize());
+
+	IOCPSession::DoSend(sendBuffer);
+}
+
+void PacketSession::DoSend(PacketRef packet)
+{
+	return DoSend(*packet);
+}
+
 IOCPSessionManager::IOCPSessionManager()
 {
 
