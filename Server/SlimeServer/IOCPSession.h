@@ -55,6 +55,9 @@ public:
 
 	bool IsConnected() { return isConnected.load(); }
 
+	template <class T>
+	shared_ptr<T> GetShared() { return static_pointer_cast<T>(shared_from_this()); }
+
 protected:
 	SOCKET sock{ INVALID_SOCKET };
 	SocketAddress address;
@@ -87,11 +90,14 @@ private:
 	virtual int32 OnReceive(uint8* buffer, int32 bytes) sealed;
 
 protected:
-	virtual void OnReceive(PacketRef packet) abstract;
+	virtual void OnReceivePacket() abstract;
 
-public:
-	void DoSend(Packet& packet);
+public:	
+	void DoSend(const Packet& packet);
 	void DoSend(PacketRef packet);
+
+protected:
+	PacketRef receivePacket{ nullptr };
 };
 
 class IOCPSessionManager

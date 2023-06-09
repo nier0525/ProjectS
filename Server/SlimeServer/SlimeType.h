@@ -43,3 +43,4 @@ public:																			\
 
 #define DECLARE_SHARED(Type) using Type##Ref = shared_ptr<class Type>
 #define GET_SHARED(Type) static_pointer_cast<Type>(shared_from_this())
+#define GET_SHARED2(Type, Parent) static_pointer_cast<Type>(Parent::shared_from_this())

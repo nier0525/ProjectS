@@ -2,7 +2,7 @@
 
 DECLARE_SHARED(User);
 
-class User : public PacketSession
+class User : public PacketSession, public JobQueue
 {
 public:
 	User();
@@ -11,9 +11,17 @@ public:
 private:
 	virtual void OnAccepted() override;
 	virtual void OnDisconnected() override;
-	virtual void OnReceive(PacketRef packet) override;
+	virtual void OnReceivePacket() override;
 
 private:
+	void OnReceiveTest();
+
+public:
+	void SendToTest();
+
+private:
+
+
 	USE_ALLOCATE(User)
 };
 

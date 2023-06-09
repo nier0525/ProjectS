@@ -38,7 +38,7 @@ int main()
 	server->Open();
 	server->Listen(10);
 
-	for (int i = 0; i < 4; ++i)
+	for (int i = 0; i < 6; ++i)
 		GET_SINGLE(ThreadManager)->Launch([&server]() { StartServer(server); });
 
 	LOG(L"Open Server");

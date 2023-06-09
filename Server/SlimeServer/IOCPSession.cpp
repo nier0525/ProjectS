@@ -216,7 +216,7 @@ bool IOCPSession::RegisterReceive()
 void IOCPSession::ProcessAccept()
 {
 	isConnected.store(true);
-	GET_SINGLE(IOCPSessionManager)->Insert(GET_SHARED(IOCPSession));
+	GET_SINGLE(IOCPSessionManager)->Insert(GetShared<IOCPSession>());
 
 	OnAccepted();
 	RegisterReceive();
@@ -225,7 +225,7 @@ void IOCPSession::ProcessAccept()
 void IOCPSession::ProcessConnect()
 {
 	isConnected.store(true);
-	GET_SINGLE(IOCPSessionManager)->Insert(GET_SHARED(IOCPSession));
+	GET_SINGLE(IOCPSessionManager)->Insert(GetShared<IOCPSession>());
 	connectEvent.owner = nullptr;
 
 	OnConnected();
@@ -235,7 +235,7 @@ void IOCPSession::ProcessConnect()
 void IOCPSession::ProcessDisconnect()
 {
 	isConnected.store(false);
-	GET_SINGLE(IOCPSessionManager)->Remove(GET_SHARED(IOCPSession));
+	GET_SINGLE(IOCPSessionManager)->Remove(GetShared<IOCPSession>());
 
 	OnDisconnected();
 	disconnectEvent.owner = nullptr;
@@ -303,21 +303,22 @@ int32 PacketSession::OnReceive(uint8* buffer, int32 bytes)
 
 		processLength += header.size;
 
-		auto packet = Packet::MakeShared();
-		packet->Parse(buffer, header.size);
+		receivePacket = Packet::MakeShared();
+		receivePacket->Parse(buffer, header.size);
 
-		OnReceive(packet);
+		OnReceivePacket();
 	}
 	return processLength;
 }
 
-void PacketSession::DoSend(Packet& packet)
+void PacketSession::DoSend(const Packet& packet)
 {
-	auto sendBuffer = GET_SINGLE(SendBufferManager)->Acquire(packet.GetAllSize());
+	auto p = const_cast<Packet&>(packet);
+	auto sendBuffer = GET_SINGLE(SendBufferManager)->Acquire(p.GetAllSize());
 	auto buffer = sendBuffer->GetBuffer();
 
-	packet.Serialize(buffer);
-	sendBuffer->Close(packet.GetAllSize());
+	p.Serialize(buffer);
+	sendBuffer->Close(p.GetAllSize());
 
 	IOCPSession::DoSend(sendBuffer);
 }
