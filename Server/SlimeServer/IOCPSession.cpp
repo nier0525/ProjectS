@@ -216,7 +216,7 @@ bool IOCPSession::RegisterReceive()
 void IOCPSession::ProcessAccept()
 {
 	isConnected.store(true);
-	GET_SINGLE(IOCPSessionManager)->Insert(GetShared<IOCPSession>());
+	GET_SINGLE(IOCPSessionManager)->Insert(GET_SHARED(IOCPSession));
 
 	OnAccepted();
 	RegisterReceive();
@@ -225,7 +225,7 @@ void IOCPSession::ProcessAccept()
 void IOCPSession::ProcessConnect()
 {
 	isConnected.store(true);
-	GET_SINGLE(IOCPSessionManager)->Insert(GetShared<IOCPSession>());
+	GET_SINGLE(IOCPSessionManager)->Insert(GET_SHARED(IOCPSession));
 	connectEvent.owner = nullptr;
 
 	OnConnected();
@@ -235,7 +235,7 @@ void IOCPSession::ProcessConnect()
 void IOCPSession::ProcessDisconnect()
 {
 	isConnected.store(false);
-	GET_SINGLE(IOCPSessionManager)->Remove(GetShared<IOCPSession>());
+	GET_SINGLE(IOCPSessionManager)->Remove(GET_SHARED(IOCPSession));
 
 	OnDisconnected();
 	disconnectEvent.owner = nullptr;

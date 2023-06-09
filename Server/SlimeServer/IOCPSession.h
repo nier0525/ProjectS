@@ -55,9 +55,6 @@ public:
 
 	bool IsConnected() { return isConnected.load(); }
 
-	template <class T>
-	shared_ptr<T> GetShared() { return static_pointer_cast<T>(shared_from_this()); }
-
 protected:
 	SOCKET sock{ INVALID_SOCKET };
 	SocketAddress address;

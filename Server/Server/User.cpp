@@ -3,18 +3,18 @@
 
 User::User()
 {
-
+	jobQueue = SlimeAllocator::MakeShared<JobQueue>();
 }
 
 User::~User()
 {
-
+	jobQueue = nullptr;
 }
 
 void User::OnAccepted()
 {
 	LOG(L"Accepted User");	
-	GET_SINGLE(UserManager)->PushJob(&UserManager::InsertUser, GetShared<User>());
+	GET_SINGLE(UserManager)->PushJob(&UserManager::InsertUser, GET_SHARED(User));
 	
 	SendToTest();
 }
@@ -22,7 +22,7 @@ void User::OnAccepted()
 void User::OnDisconnected()
 {
 	LOG(L"Disconnected User");
-	GET_SINGLE(UserManager)->PushJob(&UserManager::RemoveUser, GetShared<User>());
+	GET_SINGLE(UserManager)->PushJob(&UserManager::RemoveUser, GET_SHARED(User));
 }
 
 void User::OnReceivePacket()
@@ -41,13 +41,13 @@ void User::OnReceiveTest()
 	wchar message[0xFF]{};
 	receivePacket->Pop(message);
 
-	LOG(L"%s", message);
-	ReserveJob(1000, &User::SendToTest);
+	//LOG(L"%s", message);
+	jobQueue->ReserveJob(1000, GET_SHARED(User), &User::SendToTest);
 }
 
 void User::SendToTest()
 {
-	DoSend({ 0, L"this is packet.." });
+	DoSend(Packet(0, L"this is packet.."));
 }
 
 UserManager::UserManager()

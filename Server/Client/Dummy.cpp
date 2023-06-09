@@ -37,7 +37,7 @@ void Dummy::OnReceiveTest()
 	wchar message[0xff]{};
 	receivePacket->Pop(message);
 
-	LOG(L"%s", message);
+	//LOG(L"%s", message);
 	DoSend({ 0, message });
 }
 

@@ -38,7 +38,7 @@ int main()
 	for (int i = 0; i < 6; ++i)
 		GET_SINGLE(ThreadManager)->Launch([&client]() { StartClient(client); });
 
-	client->Connect();
+	client->Connect(1000);
 
 	LOG(L"Start Dummy Client");
 	GET_SINGLE(ThreadManager)->Joins();

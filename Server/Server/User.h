@@ -2,7 +2,7 @@
 
 DECLARE_SHARED(User);
 
-class User : public PacketSession, public JobQueue
+class User : public PacketSession
 {
 public:
 	User();
@@ -20,7 +20,7 @@ public:
 	void SendToTest();
 
 private:
-
+	JobQueueRef jobQueue{ nullptr };
 
 	USE_ALLOCATE(User)
 };

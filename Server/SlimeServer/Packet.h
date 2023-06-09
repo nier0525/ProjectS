@@ -48,7 +48,7 @@ public:
 	template <typename T>
 	void Push(T value) { PushData(&value, static_cast<uint16>(sizeof(T))); }
 	void Push(char* value) { PushString(value, static_cast<uint16>(::strlen(value))); }
-	void Push(wchar* value) { PushString(value, static_cast<uint16>(::wcslen(value))); }
+	void Push(wchar* value) { PushString(value, static_cast<uint16>(::wcslen(value)) * 2 + 1); }
 	void Push(const char* value) { Push(const_cast<char*>(value)); }
 	void Push(const wchar* value) { Push(const_cast<wchar*>(value)); }
 
